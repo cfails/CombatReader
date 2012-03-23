@@ -13,12 +13,14 @@ namespace CombatReader
             //TextWriter tw = new TextWriter()
             using (TextReader tr = new StreamReader("ComLog1.txt"))
             {
-                string preEventTime = tr.ReadLine().Split(']')[0];
-                DateTime eventTime = Convert.ToDateTime(preEventTime.Remove(0, 1));
-                Console.WriteLine(preEventTime);
-                Console.WriteLine(eventTime);
-                string preSource = tr.ReadLine().Split(']')[1];
-                Console.WriteLine(preSource.Remove(0, 2));
+                EventLine el = new EventLine();
+                string firstLine = tr.ReadLine();
+                el.eventTime = Convert.ToDateTime(firstLine.Split(']')[0].Remove(0, 1));
+                Console.WriteLine(el.eventTime);
+                el.Source = firstLine.Split(']')[1].Remove(0, 2);
+                Console.WriteLine(el.Source);
+                el.Target = firstLine.Split(']')[2].Remove(0, 2);
+                Console.WriteLine(el.Target);
                 Console.ReadLine();
             }
         }
