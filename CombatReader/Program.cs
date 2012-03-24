@@ -14,6 +14,7 @@ namespace CombatReader
             //TextWriter tw = new TextWriter()
 
             using (TextReader tr = new StreamReader("..\\..\\ComLog1.txt"))
+
             {
                 //int counter = 0;
                 bool isEOF = false;
@@ -78,41 +79,63 @@ namespace CombatReader
                 } while (isEOF == false);
                 //Console.WriteLine(list.Count);
                 int counter = 0;
+                bool isEOF = false;
                 do
                 {
                     counter++;
                     EventLine el = new EventLine();
                     string firstLine = tr.ReadLine();
-                    el.TimeStamp = Convert.ToDateTime(firstLine.Split(']')[0].Remove(0, 1));
-                    Console.WriteLine(el.TimeStamp);
-                    el.Source = firstLine.Split(']')[1].Remove(0, 2);
-                    Console.WriteLine(el.Source);
-                    el.Target = firstLine.Split(']')[2].Remove(0, 2);
-                    Console.WriteLine(el.Target);
-                    el.AbilityName = firstLine.Split(']')[3].Remove(0, 2);
-                    Console.WriteLine(el.AbilityName);
-                    string ee = firstLine.Split(']')[4].Remove(0, 2);
-                    el.Event = ee.Split(':')[0];
-                    Console.WriteLine(el.Event);
-                    el.Effect = ee.Split(':')[1].Remove(0, 1);
-                    Console.WriteLine(el.Effect);
-                    string valSplit = firstLine.Split('(')[1];
-                    string preVal = valSplit.Split(')')[0];
-                    int eVal;
-                    bool isAnumber = int.TryParse(preVal, out eVal);
-                    el.Value = eVal;
-                    Console.WriteLine(el.Value);
-                    bool isThreat = valSplit.Contains('<');
-                    if (isThreat)
+                    if (firstLine != null)
                     {
-                        string preThreat = valSplit.Split('<')[1].Replace(">", "");
-                        int eThreat;
-                        bool isAnumber2 = int.TryParse(preThreat, out eThreat);
-                        el.Threat = eThreat;
-                        Console.WriteLine(el.Threat);
+                        el.TimeStamp = Convert.ToDateTime(firstLine.Split(']')[0].Remove(0, 1));
+                        Console.WriteLine(el.TimeStamp);
+                        el.Source = firstLine.Split(']')[1].Remove(0, 2);
+                        Console.WriteLine(el.Source);
+                        el.Target = firstLine.Split(']')[2].Remove(0, 2);
+                        Console.WriteLine(el.Target);
+                        el.AbilityName = firstLine.Split(']')[3].Remove(0, 2);
+                        Console.WriteLine(el.AbilityName);
+                        string ee = firstLine.Split(']')[4].Remove(0, 2);
+                        el.Event = ee.Split(':')[0];
+                        Console.WriteLine(el.Event);
+                        el.Effect = ee.Split(':')[1].Remove(0, 1);
+                        Console.WriteLine(el.Effect);
+                        string valSplit = firstLine.Split('(')[1];
+                        int index = valSplit.IndexOf(' ');
+                        string preVal;
+                        if (index != -1)
+                        {
+                            preVal = valSplit.Remove(index).Replace(")", "").Replace("*", "");
+                        }
+                        else
+                        {
+                            preVal = valSplit.Split(')')[0].Replace("*", "");
+                        }
+                        
+                        int eVal;
+                        bool isNumber = int.TryParse(preVal, out eVal);
+                        el.Value = eVal;
+                        Console.WriteLine(el.Value);
+                        //Console.WriteLine(index);
+                        bool isThreat = valSplit.Contains('<');
+                        if (isThreat)
+                        {
+                            string preThreat = valSplit.Split('<')[1].Replace(">", "");
+                            int eThreat;
+                            bool isNumber2 = int.TryParse(preThreat, out eThreat);
+                            el.Threat = eThreat;
+                            Console.WriteLine(el.Threat);
+                        }
                     }
-                } while (counter < 30);
+                    else
+                    {
+                        isEOF = true;
+                    }
+                    list.Add(el);
+                } while (counter < 21);
+                //Console.WriteLine(list.Count);
                 Console.ReadLine();
+                //3191
             }
         }
     }
