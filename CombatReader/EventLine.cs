@@ -10,8 +10,8 @@ namespace CombatReader
         public string Source { get; set; }
         public string Target { get; set; }
         public string AbilityName { get; set; }
-        public string ResourceEvent { get; set; }
-        public string EffectName { get; set; }
+        public string Event { get; set; }
+        public string Effect { get; set; }
         public int Value { get; set; }
         public int Threat { get; set; }
     }
