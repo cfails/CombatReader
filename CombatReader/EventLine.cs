@@ -6,7 +6,7 @@ namespace CombatReader
 {
     public class EventLine
     {
-        public DateTime eventTime { get; set; }
+        public DateTime TimeStamp { get; set; }
         public string Source { get; set; }
         public string Target { get; set; }
         public string AbilityName { get; set; }
