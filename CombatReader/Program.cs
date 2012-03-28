@@ -19,7 +19,8 @@ namespace CombatReader
                 do
                 {
                     //counter++;
-                    EventLine el = new EventLine();
+                    EventLine el;
+                    el = new EventLine();
                     string firstLine = tr.ReadLine();
                     if (firstLine != null)
                     {
@@ -29,16 +30,18 @@ namespace CombatReader
                         Console.WriteLine(el.Source);
                         el.Target = firstLine.Split(']')[2].Remove(0, 2);
                         Console.WriteLine(el.Target);
-                        el.AbilityName = firstLine.Split(']')[3].Remove(0, 2);
-                        Console.WriteLine(el.AbilityName);
                         string ee = firstLine.Split(']')[4].Remove(0, 2);
+
+                        el.AbilityName.GetAbilityName(el, firstLine);
+                        Console.WriteLine(el.AbilityName.Name + " " + el.AbilityName.ID);
+
                         el.Event = ee.Split(':')[0];
                         Console.WriteLine(el.Event);
                         el.Effect = ee.Split(':')[1].Remove(0, 1);
                         Console.WriteLine(el.Effect);
                         string valSplit = firstLine.Split('(')[1];
                         int index = valSplit.IndexOf(' ');
-                        string preVal; 
+                        string preVal;
                         if (index != -1)
                         {
                             preVal = valSplit.Remove(index).Replace(")", "").Replace("*", "");
@@ -51,10 +54,12 @@ namespace CombatReader
                         bool isNumber = int.TryParse(preVal, out intVal);
                         el.Value = intVal;
                         Console.WriteLine(el.Value);
-                        bool isThreat = valSplit.Contains('<');
+
+                        el.Mitigation.GetMitigation(el, firstLine);
+                        bool isThreat = firstLine.Contains('<');
                         if (isThreat)
                         {
-                            string preThreat = valSplit.Split('<')[1].Replace(">", "");
+                            string preThreat = firstLine.Split('<')[1].Replace(">", "");
                             int threat;
                             bool isNumber2 = int.TryParse(preThreat, out threat);
                             el.Threat = threat;
