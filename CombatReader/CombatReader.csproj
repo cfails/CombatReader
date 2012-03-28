@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Event.cs" />
     <Compile Include="AbilityName.cs" />
     <Compile Include="EventLine.cs" />
     <Compile Include="Mitigation.cs" />

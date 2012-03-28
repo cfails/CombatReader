@@ -79,10 +79,11 @@ namespace CombatReader
                 } while (isEOF == false);
                 //Console.WriteLine(list.Count);
                 int counter = 0;
+                //int counter = 0;
                 bool isEOF = false;
                 do
                 {
-                    counter++;
+                    //counter++;
                     EventLine el = new EventLine();
                     string firstLine = tr.ReadLine();
                     if (firstLine != null)
@@ -93,13 +94,15 @@ namespace CombatReader
                         Console.WriteLine(el.Source);
                         el.Target = firstLine.Split(']')[2].Remove(0, 2);
                         Console.WriteLine(el.Target);
-                        el.AbilityName = firstLine.Split(']')[3].Remove(0, 2);
-                        Console.WriteLine(el.AbilityName);
-                        string ee = firstLine.Split(']')[4].Remove(0, 2);
-                        el.Event = ee.Split(':')[0];
-                        Console.WriteLine(el.Event);
-                        el.Effect = ee.Split(':')[1].Remove(0, 1);
-                        Console.WriteLine(el.Effect);
+
+                        el.AbilityName.GetAbilityName(el, firstLine);
+                        Console.WriteLine(el.AbilityName.Name + " " + el.AbilityName.ID);
+
+                        el.Event.GetEventNameAndID(el, firstLine);
+                        Console.WriteLine(el.Event.Name + " " + el.Event.ID);
+
+                        //el.Effect = ee.Split(':')[1].Remove(0, 1);
+                        //Console.WriteLine(el.Effect);
                         string valSplit = firstLine.Split('(')[1];
                         int index = valSplit.IndexOf(' ');
                         string preVal;
@@ -116,11 +119,12 @@ namespace CombatReader
                         bool isNumber = int.TryParse(preVal, out eVal);
                         el.Value = eVal;
                         Console.WriteLine(el.Value);
-                        //Console.WriteLine(index);
-                        bool isThreat = valSplit.Contains('<');
+                        el.Mitigation.GetMitigation(el, firstLine);
+                        Console.WriteLine(el.Mitigation.Value);
+                        bool isThreat = firstLine.Contains('<');
                         if (isThreat)
                         {
-                            string preThreat = valSplit.Split('<')[1].Replace(">", "");
+                            string preThreat = firstLine.Split('<')[1].Replace(">", "");
                             int eThreat;
                             bool isNumber2 = int.TryParse(preThreat, out eThreat);
                             el.Threat = eThreat;
@@ -132,7 +136,7 @@ namespace CombatReader
                         isEOF = true;
                     }
                     list.Add(el);
-                } while (counter < 21);
+                } while (isEOF == false);
                 //Console.WriteLine(list.Count);
                 Console.ReadLine();
                 //3191
