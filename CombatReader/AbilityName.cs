@@ -10,21 +10,21 @@ namespace CombatReader
             public Int64 ID { get; set; }
             public void GetAbilityName(EventLine el, string firstLine)
             {
-                string  preAilityName = firstLine.Split(']')[3].Remove(0, 2);
-                int abNameIndex = preAilityName.IndexOf('{');
+                string  preAbilityName = firstLine.Split(']')[3].Remove(0, 2);
+                int abNameIndex = preAbilityName.IndexOf(' ');
                 if (abNameIndex != -1) 
                 { 
-                el.AbilityName.Name = preAilityName.Remove(abNameIndex).Trim();
+                    el.AbilityName.Name = preAbilityName.Split('{')[0].Trim();
                 }
                 else
                 {
-                    el.AbilityName.Name = preAilityName;
+                    el.AbilityName.Name = preAbilityName;
                 }
-                bool hasID = preAilityName.Contains('{');
-                if (hasID)
+                int hasID = abNameIndex;
+                if (hasID != -1)
                 {
                     Int64 abNameID;
-                    bool idParse = Int64.TryParse(preAilityName.Split('{')[1].Replace("}", ""), out abNameID);
+                    bool idParse = Int64.TryParse(preAbilityName.Split('{')[1].Replace("}", ""), out abNameID);
                     el.AbilityName.ID = abNameID;
                 }
 

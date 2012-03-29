@@ -10,10 +10,12 @@ namespace CombatReader
         {
             Mitigation = new Mitigation();
             AbilityName = new AbilityName();
+            SourceName = new Source();
+            TargetName = new Target();
         }
         public DateTime TimeStamp { get; set; }
-        public string Source { get; set; }
-        public string Target { get; set; }
+        public Source SourceName { get; set; }
+        public Target TargetName { get; set; }
         public AbilityName AbilityName { get; set; }
         public string Event { get; set; }
         public string Effect { get; set; }

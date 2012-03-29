@@ -12,7 +12,7 @@ namespace CombatReader
         {
             var list = new List<EventLine>();
             //TextWriter tw = new TextWriter()
-            using (TextReader tr = new StreamReader(@"C:\source\CombatReader\ComLogTest.txt"))
+            using (TextReader tr = new StreamReader(@"C:\source\CombatReader\ComLog1.txt"))
             {
                 //int counter = 0;
                 bool isEOF = false;
@@ -26,10 +26,13 @@ namespace CombatReader
                     {
                         el.TimeStamp = Convert.ToDateTime(firstLine.Split(']')[0].Remove(0, 1));
                         Console.WriteLine(el.TimeStamp);
-                        el.Source = firstLine.Split(']')[1].Remove(0, 2);
-                        Console.WriteLine(el.Source);
-                        el.Target = firstLine.Split(']')[2].Remove(0, 2);
-                        Console.WriteLine(el.Target);
+
+                        el.SourceName.GetSourceName(el, firstLine);
+                        Console.WriteLine(el.SourceName.Name);
+
+                        el.TargetName.GetTargetName(el, firstLine);
+                        Console.WriteLine(el.TargetName.Name);
+
                         string ee = firstLine.Split(']')[4].Remove(0, 2);
 
                         el.AbilityName.GetAbilityName(el, firstLine);
