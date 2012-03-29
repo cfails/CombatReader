@@ -12,9 +12,8 @@ namespace CombatReader
         {
             var list = new List<EventLine>();
             //TextWriter tw = new TextWriter()
-
+            using (TextReader tr = new StreamReader("..\\..\\ComLogTest.txt"))
             using (TextReader tr = new StreamReader("..\\..\\ComLog1.txt"))
-
             {
                 //int counter = 0;
                 bool isEOF = false;
@@ -101,26 +100,17 @@ namespace CombatReader
                         el.Event.GetEventNameAndID(el, firstLine);
                         Console.WriteLine(el.Event.Name + " " + el.Event.ID);
 
-                        //el.Effect = ee.Split(':')[1].Remove(0, 1);
-                        //Console.WriteLine(el.Effect);
-                        string valSplit = firstLine.Split('(')[1];
-                        int index = valSplit.IndexOf(' ');
-                        string preVal;
-                        if (index != -1)
-                        {
-                            preVal = valSplit.Remove(index).Replace(")", "").Replace("*", "");
-                        }
-                        else
-                        {
-                            preVal = valSplit.Split(')')[0].Replace("*", "");
-                        }
-                        
-                        int eVal;
-                        bool isNumber = int.TryParse(preVal, out eVal);
-                        el.Value = eVal;
-                        Console.WriteLine(el.Value);
+                        el.Effect.GetEffectNameAndID(el, firstLine);
+                        Console.WriteLine(el.Effect.Name + " " + el.Effect.ID);
+
+                        el.Value.GetValue(el, firstLine);
+                        Console.WriteLine(String.Format("{0} {1} {2}"
+                            , el.Value.Amount, el.Value.Name, el.Value.ID));
+
                         el.Mitigation.GetMitigation(el, firstLine);
-                        Console.WriteLine(el.Mitigation.Value);
+                        Console.WriteLine(el.Mitigation.Value + " " 
+                            + el.Mitigation.Name + " " + el.Mitigation.ID);
+
                         bool isThreat = firstLine.Contains('<');
                         if (isThreat)
                         {

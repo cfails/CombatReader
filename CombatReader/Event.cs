@@ -27,7 +27,8 @@ namespace CombatReader
             {
                 Int64 evID;
                 int evIDindex = preEvent.IndexOf('}');
-                bool idParse = Int64.TryParse(preEvent.Remove(evIDindex).Split('{')[1], out evID);
+                bool idParse = Int64.TryParse(preEvent.Remove(evIDindex)
+                    .Split('{')[1], out evID);
                 el.Event.ID = evID;
             }
         }

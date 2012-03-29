@@ -61,7 +61,8 @@ namespace CombatReader
             if (hasID)
             {
                 Int64 abNameID;
-                bool idParse = Int64.TryParse(preAbilityName.Split('{')[1].Replace("}", ""), out abNameID);
+                bool idParse = Int64.TryParse(preAbilityName.Split('{')[1]
+                    .Replace("}", ""), out abNameID);
                 el.AbilityName.ID = abNameID;
             }
         }
