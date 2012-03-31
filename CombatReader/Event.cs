@@ -9,7 +9,7 @@ namespace CombatReader
         public string Name { get; set; }
         public Int64 ID { get; set; }
 
-        public void GetEventNameAndID(EventLine el, string firstLine)
+        public void GetEvent(EventLine el, string firstLine)
         {
             string preEvent = firstLine.Split(']')[4].Remove(0, 2);
             int evNameIndex = preEvent.IndexOf('{');
