@@ -15,12 +15,12 @@ namespace CombatReader
             string preTargetName = firstLine.Split(']')[2].Remove(0, 2);
             if (preTargetName.Contains('@'))
             {
-                el.Source.IsPlayer = true;
+                el.Target.IsPlayer = true;
                 el.Target.Name = preTargetName.Replace("@", "");
             }
             else
             {
-                el.Source.IsPlayer = false;
+                el.Target.IsPlayer = false;
 
                 //This part will have to change after we see non-players
                 el.Target.Name = preTargetName;
